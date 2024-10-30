@@ -1,1 +1,24 @@
-<p>home works!</p>
+<section>
+  <form>
+    <input type="text" placeholder="Filter by city" #filter>
+    <button class="primary" type="button">Search</button>
+  </form>
+</section>
+<section class="results">
+  <ng-container>
+    <section class="listing">
+      <table border="!">
+        <th>s</th>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </table>
+    </section>
+  </ng-container>
+  <ng-template #noResults>
+    <p>No se encontrarón resultados.</p>
+  </ng-template>
+</section>
+
