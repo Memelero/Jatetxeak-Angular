@@ -1,1 +1,39 @@
-/* You can add global styles to this file, and also import other style files */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Be Vietnam Pro', sans-serif;
+}
+:root {
+  --primary-color: #c9ad3e;
+  --secondary-color: #E9CE59;
+  --accent-color: #e8e7fa;
+  /* --shadow-color: #E8E8E8; */
+  --navbar-bg-color: #f8f9fa;
+  --navbar-text-color: #000000;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Tema Oscuro */
+.dark-theme {
+  --background-color: #2b2b2b;
+  --primary-color: #c9ad3e;
+  --secondary-color: #E9CE59;
+  --navbar-bg-color: #2b2b2b; /* Fondo del navbar en oscuro */
+  --navbar-text-color: #f0f0f0;
+  --shadow-color: rgba(255, 255, 255, 0.1);
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+button.primary {
+  padding: 10px;
+  border: solid 1px var(--primary-color);
+  background: var(--primary-color);
+  color: white;
+  border-radius: 8px;
+}

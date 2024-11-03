@@ -1,24 +1,34 @@
-<section>
-  <form>
-    <input type="text" placeholder="Filter by city" #filter>
-    <button class="primary" type="button">Search</button>
-  </form>
-</section>
 <section class="results">
-  <ng-container>
-    <section class="listing">
-      <table border="!">
-        <th>s</th>
-        <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-      </table>
-    </section>
-  </ng-container>
-  <ng-template #noResults>
-    <p>No se encontrarón resultados.</p>
-  </ng-template>
-</section>
+  <!-- Mostrar el número de resultados filtrados -->
+  <p>Total de resultados: {{ jatetxeakKopurua }}</p>
+  <form>
+    <input type="text" placeholder="Filtratu" [(ngModel)]="filterText" name="filterText" class="form-control" />
+    <button class="btn btn-primary" type="button" (click)="filterByCity()">Bilatu</button>
+  </form>
+  <!-- Tabla de resultados -->
+  <table class="table table-striped">
+    <thead class="table-dark">
+      <tr>
+        <th>Izena</th>
+        <th>Helbidea</th>
+        <th>Hiria</th>
+        <th>Telefonoa</th>
+        <th>Xehatasunak</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let jatetxeak of jatetxeakList | paginate: { itemsPerPage: itemsPerPage, currentPage: currentPage }">
+        <td>{{ jatetxeak.documentName }}</td>
+        <td>{{ jatetxeak.address }}</td>
+        <td>{{ jatetxeak.municipality }}</td>
+        <td>{{ jatetxeak.phone }}</td>
+        <td>
+          <button (click)="navigateToDetails(jatetxeak.id)" class="btn btn-primary btn-sm">Ikusi xehetasunak</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
+  <!-- Paginación -->
+  <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
+</section>

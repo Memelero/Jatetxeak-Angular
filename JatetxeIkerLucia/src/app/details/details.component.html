@@ -1,1 +1,28 @@
-<p>details works!</p>
+<!-- Sección de Descripción del Restaurante -->
+<section class="listing-description" *ngIf="jatetxea">
+  <h2 class="listing-heading display-5 fw-bold">{{ jatetxea.documentName }}</h2>
+  <p class="listing-location lead text-muted">{{ jatetxea.documentDescription }}</p>
+</section>
+
+<!-- Sección de Características del Restaurante -->
+<section class="listing-features my-4 p-4 bg-light rounded">
+  <h2 class="section-heading h4 mb-3 text-secondary">About this housing location</h2>
+  <ul class="list-unstyled">
+    <li class="mb-2">
+      <strong>Telefonoa:</strong> <span class="text-muted">{{ jatetxea?.phone }}</span>
+    </li>
+    <li class="mb-2">
+      <strong>Udalerri:</strong> <span class="text-muted">{{ jatetxea?.municipality }}</span>
+    </li>
+    <li class="mb-2">
+      <strong>Webgunea:</strong>
+      <a [href]="jatetxea?.web" target="_blank" class="text-decoration-none text-info">{{ jatetxea?.web }}</a>
+    </li>
+  </ul>
+</section>
+
+<!-- Mensaje de Carga -->
+<div *ngIf="!jatetxea" class="text-center text-secondary">
+  <p><i class="fas fa-spinner fa-spin me-2"></i>Cargando detalles...</p>
+</div>
+
