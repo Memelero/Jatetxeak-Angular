@@ -2,9 +2,14 @@
   <!-- Mostrar el número de resultados filtrados -->
   <p>Total de resultados: {{ jatetxeakKopurua }}</p>
   <form>
-    <input type="text" placeholder="Filtratu" [(ngModel)]="filterText" name="filterText" class="form-control" />
+    <input type="text" placeholder="Filtratu" [(ngModel)]="filterText" name="filterText" class="form-control"/>
     <button class="btn btn-primary" type="button" (click)="filterByCity()">Bilatu</button>
+    <select name="select" class="form-control" (change)="selectMunicipality($event)">
+      <option value="" disabled selected>Hautatu udalerri bat</option>
+      <option *ngFor="let jatetxeak of originalJatetxeakList" [value]="jatetxeak.municipality">{{ jatetxeak.municipality }}</option>
+    </select>
   </form>
+
   <!-- Tabla de resultados -->
   <table class="table table-striped">
     <thead class="table-dark">

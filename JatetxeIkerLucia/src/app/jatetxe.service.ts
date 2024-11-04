@@ -43,4 +43,7 @@ getJatetxeaById(id: string): Observable<Jatetxea | undefined> {
 getApplicationsByHouseId(jatetxeId: string): any[] {
   return this._historialHouse.filter(solicitud => String(solicitud.id) === jatetxeId);
 }
+addDishWithImage(formData: FormData) {
+  return this.http.post('/api/dishes', formData); // Asegúrate de que la ruta esté correctamente configurada
+}
 }

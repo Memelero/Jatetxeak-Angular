@@ -16,18 +16,19 @@ import { NgxPaginationModule } from 'ngx-pagination';
 })
 export class HomeComponent {
   @Input() Jatetxea!: Jatetxea;
-
+  originalJatetxeakList: Jatetxea[] = [];
   jatetxeakList: Jatetxea[] = [];
   filterText: string = '';
   jatetxeakKopurua: number = 0;
   currentPage: number = 1;
-  itemsPerPage: number = 5;
+  itemsPerPage: number = 8;
   jatetxeService: JatetxeService = inject(JatetxeService);
   router: Router = inject(Router);
 
   constructor() {
     this.jatetxeService.getJatetxeak().subscribe((data: Jatetxea[]) => {
       this.jatetxeakList = data;
+      this.originalJatetxeakList = data;
       this.jatetxeakKopurua = this.jatetxeakList.length;
       console.log(this.jatetxeakList)
   })
@@ -35,14 +36,21 @@ export class HomeComponent {
   navigateToDetails(jatetxeakId: string) {
     this.router.navigate(['/details', jatetxeakId]);
   }
+
+  selectMunicipality(event: Event) {
+    const selectElement = event.target as HTMLSelectElement; // Asegúrate de que sea un HTMLSelectElement
+  this.filterText = selectElement.value; // Obtiene el valor seleccionado
+  this.filterByCity();
+  }
   filterByCity() {
     if (this.filterText.trim()) {
-      this.jatetxeakList = this.jatetxeakList.filter(jatetxe =>
+      this.jatetxeakList = this.originalJatetxeakList.filter(jatetxe =>
         jatetxe.municipality.toLowerCase().includes(this.filterText.toLowerCase())
       );
     } else {
       this.jatetxeService.getJatetxeak().subscribe((data: Jatetxea[]) => {
-        this.jatetxeakList = data;
+        this.jatetxeakList = this.originalJatetxeakList;
+        this.jatetxeakKopurua = this.jatetxeakList.length;
       });
     }
     this.jatetxeakKopurua = this.jatetxeakList.length;

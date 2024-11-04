@@ -1,28 +1,50 @@
 <!-- Sección de Descripción del Restaurante -->
-<section class="listing-description" *ngIf="jatetxea">
+<div *ngIf="jatetxea">
+<section class="listing-description" >
   <h2 class="listing-heading display-5 fw-bold">{{ jatetxea.documentName }}</h2>
   <p class="listing-location lead text-muted">{{ jatetxea.documentDescription }}</p>
 </section>
 
 <!-- Sección de Características del Restaurante -->
 <section class="listing-features my-4 p-4 bg-light rounded">
-  <h2 class="section-heading h4 mb-3 text-secondary">About this housing location</h2>
+  <h2 class="section-heading h4 mb-3 text-secondary">Jatetxearen Informazioa</h2>
   <ul class="list-unstyled">
     <li class="mb-2">
-      <strong>Telefonoa:</strong> <span class="text-muted">{{ jatetxea?.phone }}</span>
+      <strong>Telefonoa:</strong> <span class="text-muted">{{ jatetxea.phone }}</span>
     </li>
     <li class="mb-2">
-      <strong>Udalerri:</strong> <span class="text-muted">{{ jatetxea?.municipality }}</span>
+      <strong>Udalerri:</strong> <span class="text-muted">{{ jatetxea.municipality }}</span>
     </li>
     <li class="mb-2">
       <strong>Webgunea:</strong>
-      <a [href]="jatetxea?.web" target="_blank" class="text-decoration-none text-info">{{ jatetxea?.web }}</a>
+      <a [href]="jatetxea.web" target="_blank" class="text-decoration-none text-info">{{ jatetxea.web }}</a>
     </li>
   </ul>
 </section>
+</div>
+
+<!-- Sección de Platos del Restaurante -->
+<section class="listing-dishes my-4 p-4 bg-light rounded">
+  <h2 class="section-heading h4 mb-3 text-secondary">Platos</h2>
+  <div class="row">
+    <div class="col-md-4 mb-4" *ngFor="let dish of dishes">
+      <div class="card">
+        <img [src]="dish.url" alt="{{ dish.name }}" class="card-img-top" style="height: 200px; object-fit: cover;">
+        <div class="card-body">
+          <h5 class="card-title">{{ dish.name }}</h5>
+          <p class="card-text">Precio: {{ dish.price }} €</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 
 <!-- Mensaje de Carga -->
 <div *ngIf="!jatetxea" class="text-center text-secondary">
-  <p><i class="fas fa-spinner fa-spin me-2"></i>Cargando detalles...</p>
+  <p><i class="fas fa-spinner fa-spin me-2"></i>Zehetasunak kargatzen...</p>
 </div>
+
+<button (click)="addDish()">Añadir Plato</button>
+
 
