@@ -1,15 +1,21 @@
 <section class="results">
   <!-- Mostrar el número de resultados filtrados -->
-  <p>Total de resultados: {{ jatetxeakKopurua }}</p>
+  <p>Emaitzak: {{ jatetxeakKopurua }}</p>
   <form>
     <input type="text" placeholder="Filtratu" [(ngModel)]="filterText" name="filterText" class="form-control"/>
     <button class="btn btn-primary" type="button" (click)="filterByCity()">Bilatu</button>
-    <select name="select" class="form-control" (change)="selectMunicipality($event)">
+    <select name="select" class="form-control" style="width: 24em !important;margin-top: 10px;" (change)="selectMunicipality($event)">
       <option value="" disabled selected>Hautatu udalerri bat</option>
-      <option *ngFor="let jatetxeak of originalJatetxeakList" [value]="jatetxeak.municipality">{{ jatetxeak.municipality }}</option>
+      <option *ngFor="let jatetxeak of uniqueMunicipalities" [value]="jatetxeak.municipality">{{ jatetxeak.municipality }}</option>
     </select>
   </form>
 
+  <!-- Ordenar tabla de la 'A' a la 'Z' -->
+  <div class="d-flex justify-content-end mb-2">
+    <button (click)="modificarOrden()" class="btn btn-secondary">
+      Berrantolatu {{ sortOrder === 'asc' ? 'Z a A' : 'A a Z' }}
+    </button>
+  </div>
   <!-- Tabla de resultados -->
   <table class="table table-striped">
     <thead class="table-dark">

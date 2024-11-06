@@ -15,7 +15,6 @@ export class ChartsComponent{
   jatetxeService = inject(JatetxeService);
   constructor() {
 
-
     // Llamamos al servicio para obtener los datos de las empresas
     this.jatetxeService.getJatetxeak().subscribe((data: Jatetxea[]) => {
       // Agrupamos los datos por municipio
