@@ -1,10 +1,11 @@
 import { Jatetxea } from './../home/jatetxe';
-import { Component, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { JatetxeService } from '../jatetxe.service';
 import Swal from 'sweetalert2';
 import confetti from 'canvas-confetti';
+
 const defaults = {
   spread: 360,
   ticks: 50,
@@ -31,30 +32,29 @@ function shoot() {
   });
 }
 
-
 @Component({
   selector: 'app-details',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './details.component.html',
-  styleUrls: ['./details.component.css'] // Cambiado a styleUrls
+  styleUrls: ['./details.component.css']
 })
-export class DetailsComponent {
-  route: ActivatedRoute = inject(ActivatedRoute);
-  jatetxeService = inject(JatetxeService);
+export class DetailsComponent implements OnInit {
   jatetxea: Jatetxea | undefined;
   solicitudes: any[] = [];
   dishes: any[] = [];
 
-  constructor() {
-    const jatetxeaId = String(this.route.snapshot.params['id']); // Convertimos el ID a número
-    console.log(`ID del restaurante: ${jatetxeaId}`); // Verificar que ID se recibe
+  constructor(private route: ActivatedRoute,private jatetxeService: JatetxeService) {}
+
+  ngOnInit(): void {
+    const jatetxeaId = String(this.route.snapshot.params['id']);
+    console.log(`ID del restaurante: ${jatetxeaId}`);
     this.jatetxeService.getJatetxeaById(jatetxeaId).subscribe(data => {
       this.jatetxea = data;
       if (this.jatetxea) {
         this.solicitudes = this.jatetxeService.getApplicationsByHouseId(this.jatetxea.id);
       }
-      this.loadDishes(); // Cargar platos al inicializar
+      this.loadDishes();
     });
   }
 
@@ -78,26 +78,20 @@ export class DetailsComponent {
           return;
         }
 
-        return { name, price, url};
+        return { name, price, url };
       }
     }).then((result) => {
       if (result.isConfirmed && result.value) {
         const newDish = result.value;
-        const jatetxeaId = this.jatetxea?.id; // Obtener el ID del restaurante
+        const jatetxeaId = this.jatetxea?.id;
 
-        // Preparar el objeto que se guardará en localStorage
         const dishData = {
           ...newDish,
-          jatetxeaId: jatetxeaId // Agregar ID del restaurante
+          jatetxeaId: jatetxeaId
         };
 
-        // Obtener los platos guardados en localStorage (si existen)
         const existingDishes = JSON.parse(localStorage.getItem('dishes') || '[]');
-
-        // Agregar el nuevo plato a la lista
         existingDishes.push(dishData);
-
-        // Guardar la lista actualizada en localStorage
         localStorage.setItem('dishes', JSON.stringify(existingDishes));
 
         console.log('Plato guardado en localStorage:', dishData);
@@ -112,8 +106,6 @@ export class DetailsComponent {
 
   loadDishes() {
     const existingDishes = JSON.parse(localStorage.getItem('dishes') || '[]');
-    // Filtrar los platos que pertenecen al restaurante actual
     this.dishes = existingDishes.filter((dish: any) => dish.jatetxeaId === this.jatetxea?.id);
   }
-
 }

@@ -1,20 +1,20 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Chart, ChartType } from 'chart.js/auto';
 import { Jatetxea } from './../home/jatetxe';
 import { JatetxeService } from '../jatetxe.service';
-
 
 @Component({
   selector: 'app-bar-chart',
   templateUrl: './charts.component.html',
   styleUrls: ['./charts.component.scss']
 })
-export class ChartsComponent{
+export class ChartsComponent implements OnInit {
 
   public chart!: Chart;
-  jatetxeService = inject(JatetxeService);
-  constructor() {
 
+  constructor(private jatetxeService: JatetxeService) {}
+
+  ngOnInit() {
     // Llamamos al servicio para obtener los datos de las empresas
     this.jatetxeService.getJatetxeak().subscribe((data: Jatetxea[]) => {
       // Agrupamos los datos por municipio
